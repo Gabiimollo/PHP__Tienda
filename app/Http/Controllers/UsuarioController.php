@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class UsuarioController extends Controller
 {
     // Mostrar la lista de usuarios
-    public function index()
+    public function listar()
     {
         echo "listar usuarios";
     }

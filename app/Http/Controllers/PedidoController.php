@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class PedidoController extends Controller
 {
     // Mostrar la lista de pedidos
-    public function index()
+    public function listar()
     {
         echo "listar pedidos";
     }

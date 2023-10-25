@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class OrdenController extends Controller
 {
     // Mostrar las ordenes
-    public function index()
+    public function listar()
     {
         echo "listar ordenes";
     }

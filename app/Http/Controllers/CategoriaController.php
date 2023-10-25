@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class CategoriaController extends Controller
 {
     // Mostrar las categorias de todos los productos
-    public function index()
+    public function listar()
     {
         echo "listar categorías";
     }

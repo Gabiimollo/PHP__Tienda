@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class StockController extends Controller
 {
     // Mostrar la lista de stock
-    public function index()
+    public function listar()
     {
         echo "listar stock";
     }

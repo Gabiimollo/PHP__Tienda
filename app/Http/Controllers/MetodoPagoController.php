@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class MetodoPagoController extends Controller
 {
     // Mostrar los métodos de pago
-    public function index()
+    public function listar()
     {
         echo "lista de métodos de pago";
     }
