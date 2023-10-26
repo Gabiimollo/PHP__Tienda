@@ -11,6 +11,8 @@ class MetodosPago extends Model
 
     public $timestamp = false;
 
+    protected $primaryKey = 'metodopago_ID';
+
     protected $fillable = ['tipo'];
 
 }

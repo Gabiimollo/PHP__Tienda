@@ -10,7 +10,15 @@ class Categorias extends Model
     use HasFactory;
     
     public $timestamp = false;
+    protected $table = 'categorias';
 
-    protected $fillable = ['categoria_id'];
+    protected $primaryKey = 'categoria_ID';
+
+    protected $fillable = ['nombre'];
+
+    public function productos()
+    {
+        return $this->hasMany('App\Producto');
+    }
 
 }

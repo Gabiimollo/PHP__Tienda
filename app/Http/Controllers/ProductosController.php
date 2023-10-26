@@ -17,18 +17,31 @@ class ProductosController extends Controller
         } elseif (request()->has("nombre")) {
             $cadenaBusqueda = request('nombre');
             $producto = Productos::where('nombre', 'like', '%' . $cadenaBusqueda . '%') -> get();
+        
+        }else if (request() -> has('Habilitados')) {
+            $producto = Productos::where('habilitado', 1) -> get();
+
+        }else if (request() -> has('Deshabilitados')) {
+            $producto = Productos::where('habilitado', 2) -> get();
+
+        }else if (request() -> has('categoria_ID')) {
+            $producto = Productos::where('categoria_ID', request('categoria_ID')) -> get();
 
         } else {
             $producto = Productos::all();
         }
-
             if ($producto -> isEmpty()) {
                 echo json_encode(array('Producto no encontrado ❌'));
             } else {
-                return response()->json(['message' => 'Producto recuperado con éxito ✅', 'product' => $producto]);
+                return response()->json(['message' => 'Producto recuperado con éxito ✅', 'producto' => $producto]);
             }
     }
 
+    public function listarProductosHabilitados() {
+
+        $producto = Productos::where('habilitado', 1) -> get();
+
+    }
     public function crearProductos(Request $request) {
         $producto = new Productos();
         $producto -> nombre = $request -> nombre;
@@ -38,8 +51,36 @@ class ProductosController extends Controller
         $producto -> categoria_id = $request -> categoria;
         $producto -> habilitado = $request -> habilitado;
         $producto -> save();
-        return response()->json(['message' => 'Producto creado con éxito ✅', 'product' => $producto]);
+
+        return response()->json(['message' => 'Producto creado con éxito ✅', 'producto' => $producto]);
 
     }
 
+    public function actualizarProducto(Request $request, Productos $producto) {
+
+        $producto -> update([
+            $producto -> nombre = $request -> nombre_nuevo,
+            $producto -> precio = $request -> precio_nuevo,
+            $producto -> imagen = $request -> imagen_nueva,
+            $producto -> descripcion = $request -> descripcion_nueva,
+            $producto -> categoria_id = $request -> categoria_nueva,
+
+        ]);
+
+        $producto -> save();
+
+        return response()->json(['message' => 'Producto actualizado con éxito ✅', 'producto' => $producto]);
+
+    }
+
+    public function eliminarProducto(Request $request, Productos $producto) {
+
+        $producto -> update([
+            $producto -> habilitado = $request -> habilitado,
+        ]);
+
+        $producto -> save();
+
+        return response()->json(['message' => 'Producto eliminado con éxito ✅', 'producto' => $producto]);
+    }
 }

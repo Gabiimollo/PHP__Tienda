@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\Input;
 
 class CategoriasController extends Controller
 {
-    public function listarCategorias() { //enviar en el postman solo el id o solo el nombre
+    public function listarCategoria() { //enviar en el postman solo el id o solo el nombre
 
         if (request()->has('categoria_ID')) {
             $categoria = Categorias::where('categoria_ID', request('categoria_ID')) -> get();
@@ -28,12 +28,30 @@ class CategoriasController extends Controller
             }
     }
 
-    public function crearCategorias(Request $request) {
+    public function crearCategoria(Request $request) {
         $categoria = new Categorias();
         $categoria -> nombre = $request -> nombre;
         $categoria -> save();
 
         return response()->json(['message' => 'Categoria creada con éxito ✅', 'categoria' => $categoria]);
 
+    }
+
+    public function actualizarCategoria(Request $request, Categorias $categoria) {
+
+        $categoria -> update([
+            $categoria -> nombre = $request -> nombre_nuevo,
+        ]);
+        $categoria -> save();
+
+        return response()->json(['message' => 'Categoria actualizada con éxito ✅', 'categoria' => $categoria]);
+
+    }
+
+    public function eliminarCategoria(Request $request, Categorias $categoria) {
+
+        $categoria -> delete();
+
+        return response()->json(['message' => 'Categoria eliminada con éxito ✅', 'categoria' => $categoria]);
     }
 }

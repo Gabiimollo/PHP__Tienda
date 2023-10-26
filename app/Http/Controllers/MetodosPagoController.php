@@ -36,6 +36,23 @@ class MetodosPagoController extends Controller
         return response()->json(['message' => 'Metodo de Pago creado con éxito ✅', 'metodopago' => $metodopago]);
 
     }
-    
+    public function actualizarMetodoPago(Request $request, MetodosPago $metodo) {
+
+        $metodo -> update([
+            $metodo -> tipo = $request -> tipo_nuevo,
+        ]);
+
+        $metodo -> save();
+
+        return response()->json(['message' => 'Metodo de Pago actualizado con éxito ✅', 'metodo' => $metodo]);
+
+    }
+
+    public function eliminarMetodoPago(Request $request, MetodosPago $metodo) {
+
+        $metodo -> delete();
+
+        return response()->json(['message' => 'Categoria eliminada con éxito ✅', 'metodo' => $metodo]);
+    }
 }
 
