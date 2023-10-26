@@ -22,11 +22,11 @@ class ProductosController extends Controller
             $producto = Productos::all();
         }
 
-        if ($producto -> isEmpty()) {
-            echo json_encode(array('Producto no encontrado ❌'));
-        } else {
-            return response()->json(['producto' => $producto]);
-        }
+            if ($producto -> isEmpty()) {
+                echo json_encode(array('Producto no encontrado ❌'));
+            } else {
+                return response()->json(['message' => 'Producto recuperado con éxito ✅', 'product' => $producto]);
+            }
     }
 
     public function crearProductos(Request $request) {
@@ -38,39 +38,8 @@ class ProductosController extends Controller
         $producto -> categoria_id = $request -> categoria;
         $producto -> habilitado = $request -> habilitado;
         $producto -> save();
-        return response()->json(['Todo ok']);
-    }
+        return response()->json(['message' => 'Producto creado con éxito ✅', 'product' => $producto]);
 
-    public function actualizarProductos(Request $request) {
-        
-        $producto_ID = $request->input('producto_ID');
-        
-        $productos = Productos::where('producto_ID', $producto_ID) ->get();
-
-        $productos -> update([
-                 'nombre_nuevo' => $request->input('nombre'),
-                 'precio_nuevo' => $request->input('precio'),
-             ]);
-    
-        
-        return response()->json(['message' => 'Producto actualizado con éxito ✅', 'data' => $productos]);
-        
-    }
-
-    public function eliminarProductos(Request $request) {
-        $producto_ID = ($request -> input('producto_ID'));
-
-        $productos = Productos::where('producto_ID', $producto_ID) ->get();
-
-        if ($productos -> isEmpty()) {
-            return response() -> json(['error' => 'Producto no encontrado ❌'], 404);
-        } else {
-            $productos -> update([
-                'habilitado' => false,
-            ]);
-        }
-        
-        return response()->json(['message' => 'Producto eliminado con éxito ✅']);
     }
 
 }
