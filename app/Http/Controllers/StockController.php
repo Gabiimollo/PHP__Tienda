@@ -3,32 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Stock; // Asegúrate de importar el modelo de Stock
 
 class StockController extends Controller
 {
-    // Mostrar la lista de stock
-    public function listar()
+    public function listarStock()
     {
-        echo "listar stock";
+        $stock = Stock::all(); // Obtener todos los elementos de stock
+        return response()->json($stock);
     }
 
-    // Crear un nuevo stock en base a un producto
-    public function crear(Request $request)
+    public function crearStock(Request $request)
     {
-        echo "stock creado";
+        $data = $request->validate([
+            'producto_id' => 'required',
+            'cantidad' => 'required',
+        ]);
+
+        $stock = Stock::create($data); // Crear un nuevo elemento de stock
+        return response()->json($stock, 201);
     }
 
-    // Actualizar un stock existente
-    public function actualizar(Request $request, $id)
+    public function actualizarStock(Request $request, Stock $stock)
     {
-        echo "stock con id:$id actualizado";
+        $data = $request->validate([
+            'cantidad' => 'required',
+        ]);
+
+        $stock->update($data); // Actualizar el elemento de stock
+        return response()->json($stock);
     }
 
-    // Eliminar un stock
-    public function eliminar($id)
+    public function eliminarStock(Stock $stock)
     {
-        echo "stock $id eliminado";
+        $stock->delete(); // Eliminar el elemento de stock
+        return response()->json(null, 204);
     }
 }
-
-
